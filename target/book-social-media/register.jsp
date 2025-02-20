@@ -1,47 +1,51 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register - Book Social Media</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .container { max-width: 400px; margin: 0 auto; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input[type="text"], input[type="password"], input[type="email"] {
-            width: 100%; padding: 8px; box-sizing: border-box;
+        body {
+            background-color: #f8f9fa;
         }
-        .error { color: red; margin-bottom: 10px; }
+        .register-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Register</h1>
-        
-        <% if (request.getParameter("error") != null) { %>
-            <div class="error">
-                Registration failed. Please try again.
-            </div>
-        <% } %>
-
+    <div class="register-container">
+        <h2 class="text-center mb-4">Register</h2>
         <form action="register" method="post">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
-            <div class="form-group">
-                <button type="submit">Register</button>
-            </div>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
         </form>
-        
-        <p>Already have an account? <a href="login.jsp">Login here</a></p>
+        <div class="text-center mt-3">
+            <p>Already have an account? <a href="login.jsp">Login here</a></p>
+        </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
