@@ -1,24 +1,38 @@
 package com.ed.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DatabaseUtil {
-    private static final String URL = "jdbc:mysql://localhost:3306/book_social_media";
-    private static final String USER = "root";
-    private static final String PASSWORD = "pie69";
+    private static final Properties properties = new Properties();
 
     static {
-        try {
+        try (InputStream input = DatabaseUtil.class.getClassLoader()
+                .getResourceAsStream("db.properties")) {
+            if (input == null) {
+                throw new RuntimeException("Unable to find db.properties");
+            }
+            properties.load(input);
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Failed to load MySQL JDBC driver", e);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Failed to initialize database configuration", e);
         }
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        try {
+            return DriverManager.getConnection(
+                properties.getProperty("db.url"),
+                properties.getProperty("db.user"),
+                properties.getProperty("db.password")
+            );
+        } catch (SQLException e) {
+            throw new SQLException("Failed to connect to database: " + e.getMessage());
+        }
     }
 
     public static void closeConnection(Connection connection) {
