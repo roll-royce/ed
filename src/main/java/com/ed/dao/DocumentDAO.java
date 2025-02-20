@@ -1,7 +1,5 @@
 package com.ed.dao;
 
-import com.ed.model.Document;
-import com.ed.util.DatabaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ed.model.Document;
+import com.ed.util.DatabaseUtil;
+
 public class DocumentDAO {
-    // Create a new document
+    private static final Logger logger = LoggerFactory.getLogger(DocumentDAO.class);
+
     public boolean createDocument(Document document) {
         String sql = "INSERT INTO documents (title, description, file_path, uploader_id) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseUtil.getConnection();
@@ -23,12 +28,11 @@ public class DocumentDAO {
             
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error creating document", e);
             return false;
         }
     }
 
-    // Get all documents
     public List<Document> getAllDocuments() {
         List<Document> documents = new ArrayList<>();
         String sql = "SELECT * FROM documents ORDER BY uploaded_at DESC";
@@ -47,12 +51,11 @@ public class DocumentDAO {
                 documents.add(doc);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error getting all documents", e);
         }
         return documents;
     }
 
-    // Get documents by uploader
     public List<Document> getDocumentsByUploader(int uploaderId) {
         List<Document> documents = new ArrayList<>();
         String sql = "SELECT * FROM documents WHERE uploader_id = ? ORDER BY uploaded_at DESC";
@@ -73,12 +76,11 @@ public class DocumentDAO {
                 documents.add(doc);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error getting documents by uploader", e);
         }
         return documents;
     }
 
-    // Delete a document
     public boolean deleteDocument(int documentId) {
         String sql = "DELETE FROM documents WHERE id = ?";
         try (Connection conn = DatabaseUtil.getConnection();
@@ -87,7 +89,7 @@ public class DocumentDAO {
             pstmt.setInt(1, documentId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error deleting document", e);
             return false;
         }
     }

@@ -4,7 +4,8 @@ import com.ed.dao.UserDAO;
 import com.ed.model.User;
 
 public class UserService {
-    private UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO = new UserDAO();
+
 
     public boolean registerUser(User user) {
         // Validate input

@@ -1,10 +1,8 @@
 package com.ed.servlet;
 
-import com.ed.model.Document;
-import com.ed.service.DocumentService;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ed.model.Document;
+import com.ed.service.DocumentService;
+
 @WebServlet("/document")
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024, // 1MB
@@ -21,9 +25,11 @@ import javax.servlet.http.Part;
     maxRequestSize = 1024 * 1024 * 50 // 50MB
 )
 public class DocumentServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(DocumentServlet.class);
     private DocumentService documentService = new DocumentService();
     private static final String UPLOAD_DIR = "uploads";
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -63,8 +69,8 @@ public class DocumentServlet extends HttpServlet {
             } else {
                 response.sendRedirect("dashboard.jsp?upload=failed");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | ServletException e) {
+            logger.error("Error processing file upload", e);
             response.sendRedirect("dashboard.jsp?upload=error");
         }
     }
@@ -78,5 +84,13 @@ public class DocumentServlet extends HttpServlet {
             }
         }
         return "";
+    }
+
+    public DocumentService getDocumentService() {
+        return documentService;
+    }
+
+    public void setDocumentService(DocumentService documentService) {
+        this.documentService = documentService;
     }
 }

@@ -1,11 +1,13 @@
 package com.ed.service;
 
-import com.ed.dao.DocumentDAO;
-import com.ed.model.Document;
 import java.util.List;
 
+import com.ed.dao.DocumentDAO;
+import com.ed.model.Document;
+
 public class DocumentService {
-    private DocumentDAO documentDAO = new DocumentDAO();
+    private final DocumentDAO documentDAO = new DocumentDAO();
+
 
     public boolean uploadDocument(Document document) {
         // Validate input
