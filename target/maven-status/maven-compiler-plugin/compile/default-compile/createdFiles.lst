@@ -1,0 +1,12 @@
+com\ed\model\User.class
+com\ed\model\Document.class
+com\ed\servlet\RegisterServlet.class
+com\ed\servlet\LogoutServlet.class
+com\ed\servlet\DocumentServlet.class
+com\ed\dao\DocumentDAO.class
+com\ed\service\DocumentService.class
+com\ed\util\DatabaseUtil.class
+com\ed\servlet\DownloadServlet.class
+com\ed\servlet\LoginServlet.class
+com\ed\dao\UserDAO.class
+com\ed\service\UserService.class
