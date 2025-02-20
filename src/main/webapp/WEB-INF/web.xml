@@ -5,9 +5,19 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
          version="3.1">
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>ed.root</param-value>
+    </context-param>
 
     <!-- Servlet Mappings -->
     <servlet>
@@ -34,8 +44,13 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DocumentServlet</servlet-name>
-        <url-pattern>/documents</url-pattern>
+        <url-pattern>/documents/*</url-pattern>
     </servlet-mapping>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>resources.application</param-value>
+    </context-param>
 
     <!-- Error Pages -->
     <error-page>
